@@ -14,7 +14,7 @@ public:
     ~MegaDraftDeck();
 
 private:
-    std::array<Spell, 36> spells;
+    std::vector<Spell> spells;
 };
 
 #endif

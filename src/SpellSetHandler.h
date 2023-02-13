@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include <vector>
+#include <map>
 #include <fstream>
 #include <string>
 
@@ -13,13 +13,13 @@
 class SpellSetHandler
 {
 public:
-	std::shared_ptr<SpellSetHandler> getInstance() { return instance; }
-private:
+	static std::shared_ptr<SpellSetHandler> getInstance() { return instance; }
+	std::shared_ptr<SpellSet> getSpellSet(std::string name) { return spellSets[name]; }
 	SpellSetHandler();
-	~SpellSetHandler();
+private:
 	static std::shared_ptr<SpellSetHandler> instance;
-	void addSpellSets(std::ifstream& spellSetsCSV, std::unique_ptr<SpellSet> spellSet);
-	std::vector<std::unique_ptr<SpellSet>> spellSets;
+	void addSpellSets(std::ifstream& spellSetsCSV, std::shared_ptr<SpellSet> spellSet);
+	std::map<std::string, std::shared_ptr<SpellSet>> spellSets;
 };
 
 #endif

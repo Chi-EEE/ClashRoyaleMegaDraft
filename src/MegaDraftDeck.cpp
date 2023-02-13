@@ -2,7 +2,7 @@
 
 MegaDraftDeck::MegaDraftDeck()
 {
-
+	spells.reserve(36);
 }
 
 MegaDraftDeck::~MegaDraftDeck()

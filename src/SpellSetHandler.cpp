@@ -1,23 +1,23 @@
 #include "SpellSetHandler.h"
-
-std::shared_ptr<SpellSetHandler> instance = std::make_unique<SpellSetHandler>();
+#include<iostream>
+std::shared_ptr<SpellSetHandler> SpellSetHandler::instance = std::make_shared<SpellSetHandler>(); // This line is broken
 
 SpellSetHandler::SpellSetHandler()
 {
-	std::string _;
-	std::ifstream spellSetsCSV("assets/spell_sets.csv");
-	std::getline(spellSetsCSV, _); // Skip Headers
-	std::getline(spellSetsCSV, _); // Skip Type Headers
-	SpellSetHandler::addSpellSets(spellSetsCSV, nullptr);
-	spellSetsCSV.close();
+	if (Global::fileExists("assets/spell_sets.csv")) {
+		std::string _;
+		std::ifstream spellSetsCSV("assets/spell_sets.csv");
+		std::getline(spellSetsCSV, _); // Skip Headers
+		std::getline(spellSetsCSV, _); // Skip Type Headers
+		SpellSetHandler::addSpellSets(spellSetsCSV, nullptr);
+		spellSetsCSV.close();
+	}
+	else {
+		std::cout << "Unable to find spell_sets.csv";
+	}
 }
 
-SpellSetHandler::~SpellSetHandler()
-{
-
-}
-
-void SpellSetHandler::addSpellSets(std::ifstream& spellSetsCSV, std::unique_ptr<SpellSet> spellSet) {
+void SpellSetHandler::addSpellSets(std::ifstream& spellSetsCSV, std::shared_ptr<SpellSet> spellSet) {
 	do {
 		char character = spellSetsCSV.get();
 		std::string spellSetName;
@@ -26,8 +26,8 @@ void SpellSetHandler::addSpellSets(std::ifstream& spellSetsCSV, std::unique_ptr<
 			character = spellSetsCSV.get();
 		}
 		if (spellSetName != "") {
-			spellSets.push_back(std::move(spellSet));
-			spellSet = std::make_unique<SpellSet>(spellSetName);
+			spellSets.insert(std::make_pair(spellSet->getName(), std::move(spellSet)));
+			spellSet = std::make_shared<SpellSet>(spellSetName);
 		}
 		character = spellSetsCSV.get();
 		std::string spellName;
@@ -43,5 +43,5 @@ void SpellSetHandler::addSpellSets(std::ifstream& spellSetsCSV, std::unique_ptr<
 		}
 		spellSet->addSpell(std::make_shared<Spell>(spellSetName, TID));
 	} while (Global::endOfFile(spellSetsCSV));
-	spellSets.push_back(std::move(spellSet));
+	spellSets.insert(std::make_pair(spellSet->getName(), std::move(spellSet)));
 }

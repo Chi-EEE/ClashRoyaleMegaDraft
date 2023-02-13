@@ -8,6 +8,8 @@
 
 class Spell {
 public:
+	Spell(std::string name, std::string TID);
+	std::string getName() { return name; }
 private:
 	std::string name;
 	std::string TID;

@@ -5,8 +5,12 @@
 
 #include <string>
 #include <vector>
-#include <memory>
 
+#include <algorithm>    // std::shuffle
+#include <random>       // std::default_random_engine
+#include <chrono>       // std::chrono::system_clock
+
+#include <memory>
 #include "Spell.h"
 
 class SpellSet {
@@ -14,8 +18,20 @@ public:
 	SpellSet(std::string name);
 	~SpellSet();
 	void addSpell(std::shared_ptr<Spell> spell);
+	std::string getName() { return name; }
+	void shuffle();
+	/*operator std::string() const
+	{
+		std::string output = this->name + " : [";
+		for (auto spell : this->spells) {
+			output += spell->getName() + " ";
+		}
+		output += "]";
+		return output;
+	}*/
 private:
 	std::string name;
 	std::vector<std::shared_ptr<Spell>> spells;
 };
+
 #endif
