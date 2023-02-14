@@ -4,7 +4,6 @@ target("ClashRoyaleMegaDraft")
     set_kind("binary")
     add_headerfiles("src/*.h")
     add_files("src/*.cpp")
-    add_includedirs("assets")
 --
 -- If you want to known more usage about xmake, please see https://xmake.io
 --
