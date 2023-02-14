@@ -3,8 +3,11 @@
 
 #pragma once
 
-#include <array>
+#include <memory>
+#include <vector>
 
+#include "SpellSetHandler.h"
+#include "SpellSet.h"
 #include "Spell.h"
 
 class MegaDraftDeck
@@ -14,7 +17,8 @@ public:
     ~MegaDraftDeck();
 
 private:
-    std::vector<Spell> spells;
+    void addSpells(std::shared_ptr<SpellSet> spellSet, int amount);
+    std::vector<std::shared_ptr<Spell>> spells;
 };
 
 #endif

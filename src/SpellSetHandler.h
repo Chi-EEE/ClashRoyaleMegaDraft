@@ -17,7 +17,7 @@ public:
 	SpellSetHandler(SpellSetHandler const&) = delete;
 	SpellSetHandler& operator=(SpellSetHandler const&) = delete;
 
-	std::shared_ptr<SpellSet> getSpellSet(std::string name) { return spellSets[name]; }
+	std::shared_ptr<SpellSet> getSpellSet(std::string name) { spellSets[name]->shuffle(); return spellSets[name]; }
 
 	static SpellSetHandler& getInstance() {
 		static SpellSetHandler instance;

@@ -20,7 +20,7 @@ public:
 	void addSpell(std::shared_ptr<Spell> spell);
 	std::string getName() { return name; }
 	void shuffle();
-	/*operator std::string() const
+	operator std::string() const
 	{
 		std::string output = this->name + " : [";
 		for (auto spell : this->spells) {
@@ -28,7 +28,10 @@ public:
 		}
 		output += "]";
 		return output;
-	}*/
+	}
+	std::shared_ptr<Spell> getSpell(int i) {
+		return spells[i];
+	}
 private:
 	std::string name;
 	std::vector<std::shared_ptr<Spell>> spells;
