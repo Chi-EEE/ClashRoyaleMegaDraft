@@ -4,7 +4,7 @@
 #pragma once
 
 #include <memory>
-#include <vector>
+#include "ordered_map.h"
 
 #include "SpellSetHandler.h"
 #include "SpellSet.h"
@@ -18,7 +18,7 @@ public:
 
 private:
     void addSpells(std::shared_ptr<SpellSet> spellSet, int amount);
-    std::map<std::string, std::shared_ptr<Spell>> spells;
+    tsl::ordered_map<std::string, std::shared_ptr<Spell>> spells;
 };
 
 #endif
