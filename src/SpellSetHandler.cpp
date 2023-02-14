@@ -1,5 +1,4 @@
 #include "SpellSetHandler.h"
-#include<iostream>
 
 SpellSetHandler::SpellSetHandler()
 {

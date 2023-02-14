@@ -10,15 +10,7 @@ public:
 	}
 
 	static bool endOfFile(std::ifstream& file) {
-		int c = file.peek();
-		if (c == EOF) {
-			if (file.eof())
-				return true;
-			else
-				return false;
-		}
-		else
-			return false;
+		return (file.peek() == EOF) && (file.eof());
 	}
 private:
 	Global() {
