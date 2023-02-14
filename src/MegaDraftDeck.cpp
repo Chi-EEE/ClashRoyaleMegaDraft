@@ -2,7 +2,6 @@
 
 MegaDraftDeck::MegaDraftDeck()
 {
-	spells.reserve(36);
 	SpellSetHandler& spellSetHandler = SpellSetHandler::getInstance();
 	auto Draft_RH_TankUnit = spellSetHandler.getSpellSet("Draft_RH_TankUnit");
 	auto Draft_RH_AntiAir = spellSetHandler.getSpellSet("Draft_RH_AntiAir");
@@ -31,8 +30,18 @@ MegaDraftDeck::~MegaDraftDeck()
 
 void MegaDraftDeck::addSpells(std::shared_ptr<SpellSet> spellSet, int amount)
 {
-	for (int i = 0; i < amount; i++)
+	int i = 0;
+	int skip = 0;
+	while (i < amount)
 	{
-		spells.push_back(spellSet->getSpell(i));
+		auto spell = spellSet->getSpell(i + skip);
+		// Check if mega draft deck doesn't contain the spell
+		if (!spells.contains(spell->getName()))
+		{
+			spells.insert(std::make_pair(spell->getName(), spell));
+			i++;
+		}
+		else
+			skip++;
 	}
 }

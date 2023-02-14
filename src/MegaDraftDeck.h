@@ -18,7 +18,7 @@ public:
 
 private:
     void addSpells(std::shared_ptr<SpellSet> spellSet, int amount);
-    std::vector<std::shared_ptr<Spell>> spells;
+    std::map<std::string, std::shared_ptr<Spell>> spells;
 };
 
 #endif
