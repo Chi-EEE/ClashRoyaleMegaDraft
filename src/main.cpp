@@ -6,8 +6,8 @@
 
 int main(int argc, char** argv)
 {
-    auto spellSetHandler = SpellSetHandler::getInstance();
-    auto spellSet = spellSetHandler->getSpellSet("SetRandomRangedSupport");
+    SpellSetHandler& spellSetHandler = SpellSetHandler::getInstance();
+    auto spellSet = spellSetHandler.getSpellSet("SetRandomRangedSupport");
     spellSet->shuffle();
     return 0;
 }

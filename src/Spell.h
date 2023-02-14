@@ -13,6 +13,5 @@ public:
 private:
 	std::string name;
 	std::string TID;
-	std::vector<Spell> spells;
 };
 #endif

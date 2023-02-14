@@ -13,11 +13,17 @@
 class SpellSetHandler
 {
 public:
-	static std::shared_ptr<SpellSetHandler> getInstance() { return instance; }
-	std::shared_ptr<SpellSet> getSpellSet(std::string name) { return spellSets[name]; }
 	SpellSetHandler();
+	SpellSetHandler(SpellSetHandler const&) = delete;
+	SpellSetHandler& operator=(SpellSetHandler const&) = delete;
+
+	std::shared_ptr<SpellSet> getSpellSet(std::string name) { return spellSets[name]; }
+
+	static SpellSetHandler& getInstance() {
+		static SpellSetHandler instance;
+		return instance;
+	}
 private:
-	static std::shared_ptr<SpellSetHandler> instance;
 	void addSpellSets(std::ifstream& spellSetsCSV, std::shared_ptr<SpellSet> spellSet);
 	std::map<std::string, std::shared_ptr<SpellSet>> spellSets;
 };

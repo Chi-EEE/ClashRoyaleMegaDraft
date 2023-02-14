@@ -1,6 +1,5 @@
 #include "SpellSetHandler.h"
 #include<iostream>
-std::shared_ptr<SpellSetHandler> SpellSetHandler::instance = std::make_shared<SpellSetHandler>(); // This line is broken
 
 SpellSetHandler::SpellSetHandler()
 {
@@ -20,28 +19,38 @@ SpellSetHandler::SpellSetHandler()
 void SpellSetHandler::addSpellSets(std::ifstream& spellSetsCSV, std::shared_ptr<SpellSet> spellSet) {
 	do {
 		char character = spellSetsCSV.get();
-		std::string spellSetName;
-		while (character != ',') {
-			spellSetName += character;
+		if (character == '"') {
 			character = spellSetsCSV.get();
-		}
-		if (spellSetName != "") {
-			spellSets.insert(std::make_pair(spellSet->getName(), std::move(spellSet)));
+			std::string spellSetName;
+			while (character != '"') {
+				spellSetName += character;
+				character = spellSetsCSV.get();
+			}
+			character = spellSetsCSV.get(); // Skip comma
+			if (spellSet != nullptr)
+				spellSets.insert(std::make_pair(spellSet->getName(), std::move(spellSet)));
 			spellSet = std::make_shared<SpellSet>(spellSetName);
 		}
-		character = spellSetsCSV.get();
+		character = spellSetsCSV.get(); // Check if this is a string
 		std::string spellName;
-		while (character != ',') {
-			spellName += character;
+		if (character == '"') {
+			character = spellSetsCSV.get();
+			while (character != '"') {
+				spellName += character;
+				character = spellSetsCSV.get();
+			}
 			character = spellSetsCSV.get();
 		}
 		character = spellSetsCSV.get();
 		std::string TID;
-		while (character != '\n') {
-			TID += character;
+		if (character == '"') {
 			character = spellSetsCSV.get();
+			while (character != '\n') {
+				TID += character;
+				character = spellSetsCSV.get();
+			}
 		}
-		spellSet->addSpell(std::make_shared<Spell>(spellSetName, TID));
-	} while (Global::endOfFile(spellSetsCSV));
+		spellSet->addSpell(std::make_shared<Spell>(spellName, TID));
+	} while (!Global::endOfFile(spellSetsCSV));
 	spellSets.insert(std::make_pair(spellSet->getName(), std::move(spellSet)));
 }
