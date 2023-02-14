@@ -2,6 +2,7 @@ add_rules("mode.debug", "mode.release")
 
 target("ClashRoyaleMegaDraft")
     set_kind("binary")
+    add_headerfiles("src/include/*.h")
     add_headerfiles("src/*.h")
     add_files("src/*.cpp")
 --

@@ -4,7 +4,7 @@
 #pragma once
 
 #include <memory>
-#include "ordered_map.h"
+#include "include/ordered_map.h"
 
 #include "SpellSetHandler.h"
 #include "SpellSet.h"
